@@ -1,0 +1,129 @@
+spring:
+   profiles:
+      active: devRS
+      
+server:
+   port: 10019
+
+management:
+   port: 10019
+   
+security:
+    jwt:
+       key-store: classpath:siga.jks
+       key-store-password: changeit
+       key-pair-alias: siga
+       key-pair-password: siga
+#   jwt:
+#      public-key: classpath:siga-public.key
+#  oauth2:
+#    resource:
+#      token-info-uri: "http://localhost:9000/oauth/check_token"
+#      token-type: Bearer
+#    client:
+#      client-id: clientId
+#      client-secret: secret
+#      grant-type: "client_credentials"
+#      scope: "read,write"
+#    user:
+#      name: none
+#      password: none
+    
+mybatis:
+   type-aliases-package: com.bkkbn.siga.model
+   mapper-locations: "classpath*:**/mappers/*.xml"
+
+---
+
+spring:
+   profiles: local
+   
+   jackson:
+      serialization:
+         INDENT_OUTPUT: true
+      
+   datasource:
+      url: jdbc:postgresql://localhost:5432/postgres
+      username: postgres
+      password: admin
+      cachePrepStmts: true
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+      useServerPrepStmts: true  
+   
+---
+
+spring:
+   profiles: ocplintasarta
+   
+   jackson:
+      serialization:
+         INDENT_OUTPUT: true
+      
+   datasource:
+      url: jdbc:postgresql://36.37.120.101:5435/BKKBN?currentSchema=pk2021
+      username: developer
+      password: developer11s
+      cachePrepStmts: true
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+      useServerPrepStmts: true   
+---
+
+spring:
+   profiles: devRS
+   
+   jackson:
+      serialization:
+         INDENT_OUTPUT: true
+      
+   datasource:
+      url: jdbc:postgresql://localhost:5432/BKKBN?currentSchema=pk2021
+      username: developer
+      password: developer1
+      cachePrepStmts: true
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+      useServerPrepStmts: true         
+---
+
+spring:
+   profiles: prod
+   
+   jackson:
+      serialization:
+         INDENT_OUTPUT: true
+      
+   datasource:
+      url: jdbc:postgresql://192.168.181.117:5432/BKKBN?currentSchema=sigabaru
+      username: developer
+      password: developer1
+      cachePrepStmts: true
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+      useServerPrepStmts: true       
+
+---
+
+spring:
+   profiles: public
+   
+   jackson:
+      serialization:
+         INDENT_OUTPUT: true
+      
+   datasource:
+      url: jdbc:postgresql://36.37.120.101:5435/BKKBN?currentSchema=masterdatapkbaru
+      username: developer
+      password: developer11s
+      cachePrepStmts: true
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+      useServerPrepStmts: true  
+      hikari:
+          connection-timeout: 20000
+          minimum-idle: 10
+          maximum-pool-size: 10
+          idle-timeout: 10000
+          max-lifetime: 1000
+          auto-commit: true  

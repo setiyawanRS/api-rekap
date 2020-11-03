@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.bkkbn.siga.dao.RekapRTDao" >
+ 
+    <resultMap id="RekapRTResultMap" type="RekapRT">
+        <id column="id" property="id" />
+        <result column="jumlah_kk" property="jumlah_kk" />
+        <result column="jumlah_kk_didata" property="jumlah_kk_didata" />
+        <result column="tidak_ditemui" property="tidak_ditemui" />
+        <result column="ditolak" property="ditolak" />
+        <result column="tidak_jawab" property="tidak_jawab" />
+        <result column="yang_ada" property="yang_ada" />
+        <result column="status" property="status" />
+        <result column="id_kelurahan" property="id_kelurahan" />
+        <result column="id_rw" property="id_rw" />
+        <result column="id_rt" property="id_rt" />
+    </resultMap>
+ 
+    <select id="findAllRekapRTs" resultMap="RekapRTResultMap">
+        SELECT 
+        	id, 
+        	jumlah_kk, 
+        	jumlah_kk_didata, 
+        	tidak_ditemui, ditolak, 
+        	tidak_jawab, 
+        	yang_ada, 
+        	status, 
+        	id_kelurahan, 
+        	id_rw, 
+        	id_rt
+		FROM pk2021.rekap_rt
+		
+		<if test="id_kelurahan != 0">
+			WHERE id_kelurahan = #{id_kelurahan}			
+				<if test="id_rw != 0">
+								AND id_rw = #{id_rw}  							
+								<if test="id_rt !=0">
+									AND id_rt = #{id_rt}						
+								</if>    						
+							</if>    					
+						</if>    				    			
+		
+    </select>
+ 
+    <select id="findById" resultMap="RekapRTResultMap">
+        SELECT 
+        	id, 
+        	jumlah_kk, 
+        	jumlah_kk_didata, 
+        	tidak_ditemui, ditolak, 
+        	tidak_jawab, 
+        	yang_ada, 
+        	status, 
+        	id_kelurahan, 
+        	id_rw, 
+        	id_rt
+		FROM pk2021.rekap_rt
+		WHERE "id"=#{id}
+    </select>
+ 
+    <insert id="createRekapRT" parameterType="RekapRT" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pk2021.rekap_rt(
+        id, 
+        jumlah_kk, 
+        jumlah_kk_didata, 
+        tidak_ditemui, 
+        ditolak, 
+        tidak_jawab, 
+        yang_ada, 
+        status, 
+        id_kelurahan, 
+        id_rw, 
+        id_rt)
+        values(
+        #{id},
+        #{jumlah_kk},
+        #{jumlah_kk_didata},
+        #{tidak_ditemui},
+        #{ditolak},
+        #{tidak_jawab},
+        #{yang_ada},
+        #{status},
+        #{id_kelurahan},
+        #{id_rw},
+        #{id_rt})
+    </insert>
+    
+    <update id="updateRekapRT" parameterType="RekapRT" useGeneratedKeys="true" keyProperty="id">
+    UPDATE pk2021.rekap_rt
+	SET 
+		jumlah_kk=#{jumlah_kk}, 
+		jumlah_kk_didata=#{jumlah_kk_didata}, 
+		tidak_ditemui=#{tidak_ditemui}, 
+		ditolak=#{ditolak}, 
+		tidak_jawab=#{tidak_jawab}, 
+		yang_ada=#{yang_ada}, 
+		status=#{status}, 
+		id_kelurahan=#{id_kelurahan}, 
+		id_rw=#{id_rw}, 
+		id_rt=#{id_rt}
+	WHERE  id=#{id}
+    </update>
+    
+    <delete id="deleteRekapRTById" >
+    	DELETE FROM pk2021.rekap_rt WHERE  id=#{id}
+    </delete>
+</mapper>

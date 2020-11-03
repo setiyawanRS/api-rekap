@@ -1,0 +1,15 @@
+package com.bkkbn.siga.config.security;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@ConfigurationProperties("security")
+@Getter
+@Setter
+public class SecurityProperties {
+
+    private JwtProperties jwt;
+
+}
