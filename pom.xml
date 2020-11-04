@@ -10,11 +10,11 @@
 		<relativePath />
 		<!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.bkkbn.siga.wahyu</groupId>
-	<artifactId>rekap-api-wahyu</artifactId>
+	<groupId>com.bkkbn.siga</groupId>
+	<artifactId>rekap-api</artifactId>
 	<version>1.0</version>
 	<!--<packaging>war</packaging> -->
-	<name>rekap-api-wahyu</name>
+	<name>rekap-api</name>
 	<description>
 		<![CDATA[
 		   
@@ -24,8 +24,12 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<commons-lang3.version>3.4</commons-lang3.version>
+		<commons-collections4.version>4.1</commons-collections4.version>
+		<ch.qos.logback.version>1.2.3</ch.qos.logback.version>
 	</properties>
 
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -44,32 +48,44 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-oauth2-core</artifactId>
 		</dependency>
-		<dependency>  
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${ch.qos.logback.version}</version>
+		</dependency>
 
 
 		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>2.0.1</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${ch.qos.logback.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-log4j2</artifactId>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-access</artifactId>
+			<version>${ch.qos.logback.version}</version>
 		</dependency>
 
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
+			<!-- <scope>runtime</scope> -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<!-- <scope>provided</scope> -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -102,20 +118,32 @@
 		</dependency>
 
 		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.6</version>
-		</dependency>
-		<dependency>
+
+
+
+
+
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<!-- MyBatis -->
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>	  
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+		<!-- Apache Commons -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>${commons-collections4.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -169,19 +197,19 @@
 
 	<repositories>
 		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-		</repository>
-		<repository>
-			<id>spring-snapshots</id>
-			<name>Spring Snapshots</name>
-			<url>https://repo.spring.io/snapshot</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
+
+
+
+
+
+
+
+
+
+
+
+
+
 			<id>maven-office</id>
 			<url>http://dev2.quadras.co.id:8081/nexus/content/groups/maven-public/</url>
 			<releases>
