@@ -1,6 +1,6 @@
 spring:
    profiles:
-      active: devRS
+      active: ocplintasarta
       
 server:
    port: 10019
