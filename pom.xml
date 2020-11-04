@@ -7,14 +7,17 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.6.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath />
+		<!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.bkkbn.siga.wahyu</groupId>
 	<artifactId>rekap-api-wahyu</artifactId>
 	<version>1.0</version>
 	<!--<packaging>war</packaging> -->
 	<name>rekap-api-wahyu</name>
-	<description><![CDATA[
+	<description>
+		<![CDATA[
+		   
 		Authentication and Authorization Service for SIGA BKKBN Using OAuth2 + JWT using Spring Boot 2 / Spring Security 5
 	]]>
 	</description>
@@ -38,10 +41,16 @@
 			<version>2.1.2.RELEASE</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-core</artifactId>
+		</dependency>
+		<dependency>  
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
@@ -52,6 +61,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
+
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -66,6 +76,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<!-- exclude logback , add log4j2 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -77,6 +88,8 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
@@ -87,6 +100,7 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.8.0</version>
 		</dependency>
+
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
@@ -97,9 +111,76 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>	  
 	</dependencies>
 
+	<build>
+		<finalName>rekap-api</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>	
+
+	<profiles>
+		<profile>
+			<id>kubernetes</id>
+			<build>
+				<finalName>rekap-api</finalName>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.jkube</groupId>
+						<artifactId>kubernetes-maven-plugin</artifactId>
+						<version>1.0.0</version>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>openshift</id>
+			<build>
+				<finalName>rekap-api</finalName>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.jkube</groupId>
+						<artifactId>openshift-maven-plugin</artifactId>
+						<version>1.0.0</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>resource</goal>
+									<goal>build</goal>
+									<goal>apply</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>	   
+
+
 	<repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+		</repository>
+		<repository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>https://repo.spring.io/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
 		<repository>
 			<id>maven-office</id>
 			<url>http://dev2.quadras.co.id:8081/nexus/content/groups/maven-public/</url>
@@ -114,6 +195,19 @@
 
 	<pluginRepositories>
 		<pluginRepository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>https://repo.spring.io/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>	
 			<id>maven-office</id>
 			<url>http://dev2.quadras.co.id:8081/nexus/content/groups/maven-public/</url>
 			<releases>
@@ -124,39 +218,7 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-	
-	<profiles>
-		<profile>
-		    <id>devRS</id>
-	        <activation>
-	            <activeByDefault>true</activeByDefault>
-	        </activation>
-			<build>
-				<finalName>rekap-api</finalName>
-				<plugins>
-					<plugin>
-						<groupId>org.springframework.boot</groupId>
-						<artifactId>spring-boot-maven-plugin</artifactId>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		
-		<profile>
-		    <id>ocplintasarta</id>
-	        <activation>
-	            <activeByDefault>true</activeByDefault>
-	        </activation>
-			<build>
-				<finalName>rekap-api</finalName>
-				<plugins>
-					<plugin>
-						<groupId>org.springframework.boot</groupId>
-						<artifactId>spring-boot-maven-plugin</artifactId>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
-	
+
+
+
 </project>
